@@ -1,51 +1,79 @@
 package com.warehouse.dao.mysql;
 
 import com.warehouse.dao.IRepository;
-import com.warehouse.utils.HibernateUtils;
+import com.warehouse.utils.ISessionAction;
+import com.warehouse.utils.ISessionFunc;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class Repository<T> implements IRepository<T> {
-    protected Session session;
     private Class<T> tClass;
-    private String tableName;
+    protected String tableName;
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     public Repository(Class<T> tClass){
-        this.session = HibernateUtils.getSessionFactory().openSession();
         this.tClass = tClass;
         this.tableName = tClass.getSimpleName();
     }
 
     public T getById(int id){
-        return (T)this.session.get(this.tClass, id);
+        T result = this.sessionFunc(s -> s.get(this.tClass, id));
+
+        return result;
     }
 
     @Override
     public List<T> getAll() {
-        List<T> result = null;
-
-        this.session.beginTransaction();
-        result = this.session.createQuery("from " + this.tableName).list();
-        this.session.getTransaction().commit();
+        List<T> result = this.sessionFunc(s -> s.createQuery("from " + this.tableName).list());
 
         return result;
     }
 
     @Override
     public void add(T entity) {
-        this.session.beginTransaction();
-        this.session.persist(entity);
-        this.session.evict(entity);
-        this.session.getTransaction().commit();
+        this.sessionAction(s -> {
+            s.persist(entity);
+            s.evict(entity);
+        });
     }
 
     @Override
     public void remove(T entity) {
-        this.session.beginTransaction();
-        Object mergedEntity = this.session.merge(entity);
-        this.session.delete(mergedEntity);
-        this.session.getTransaction().commit();
+        this.sessionAction(s -> {
+            Object mergedEntity = s.merge(entity);
+            s.delete(mergedEntity);
+        });
     }
+
+    //region Misc
+
+    protected void sessionAction(ISessionAction action){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+
+        action.invoke(session);
+
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    protected <TFunc> TFunc sessionFunc(ISessionFunc<TFunc> func){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+
+        TFunc result = func.invoke(session);
+
+        session.getTransaction().commit();
+        session.close();
+
+        return result;
+    }
+
+    //endregion
 }
 

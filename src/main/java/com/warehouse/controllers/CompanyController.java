@@ -1,59 +1,38 @@
 package com.warehouse.controllers;
 
 import com.warehouse.dao.IRepository;
-import com.warehouse.dao.mysql.Repository;
 import com.warehouse.models.Company;
 import com.warehouse.utils.OperationResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/company")
+@RequestMapping("/api/v1/companies")
 @RestController
-public class CompanyController {
+public class CompanyController extends Controller {
+    @Autowired
     private IRepository<Company> repository;
 
     public CompanyController(){
-        this.repository = new Repository<Company>(Company.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody Object index() {
-        try
-        {
-            List<Company> companies = this.repository.getAll();
-            return OperationResult.CreateSuccess(companies);
-        }
-        catch (Exception ex)
-        {
-            return OperationResult.CreateError(ex.getMessage());
-        }
+    public Object index() {
+        List<Company> companies = this.repository.getAll();
+        return OperationResult.CreateSuccess(companies);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Object addCompany(@RequestBody Company company) {
-        try
-        {
-            this.repository.add(company);
-            return OperationResult.CreateSuccess(null);
-        }
-        catch (Exception ex)
-        {
-            return OperationResult.CreateError(ex.getMessage());
-        }
+    public Object addCompany(@RequestBody Company company) {
+        this.repository.add(company);
+        return OperationResult.CreateSuccess(null);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Object deleteCompany(@RequestBody Company company) {
-        try
-        {
-            this.repository.remove(company);
-            return OperationResult.CreateSuccess(null);
-        }
-        catch (Exception ex)
-        {
-            return OperationResult.CreateError(ex.getMessage());
-        }
+    public Object deleteCompany(@RequestBody Company company) {
+        this.repository.remove(company);
+        return OperationResult.CreateSuccess(null);
     }
 }

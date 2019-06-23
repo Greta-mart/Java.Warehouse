@@ -1,8 +1,6 @@
 package com.warehouse.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
@@ -10,8 +8,8 @@ import javax.persistence.*;
 @Table(name = "contact", schema = "warehouse")
 public class Contact {
     private int id;
-    private String accessModifier;
-    private String type;
+    private ContactAccessModifier accessModifier;
+    private ContactType type;
     private String value;
     private ProductOwner productOwner;
 
@@ -28,21 +26,23 @@ public class Contact {
 
     @Basic
     @Column(name = "access_modifier", nullable = false, length = 20)
-    public String getAccessModifier() {
+    @Enumerated(EnumType.STRING)
+    public ContactAccessModifier getAccessModifier() {
         return accessModifier;
     }
 
-    public void setAccessModifier(String accessModifier) {
+    public void setAccessModifier(ContactAccessModifier accessModifier) {
         this.accessModifier = accessModifier;
     }
 
     @Basic
     @Column(name = "type", nullable = false, length = 20)
-    public String getType() {
+    @Enumerated(EnumType.STRING)
+    public ContactType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ContactType type) {
         this.type = type;
     }
 

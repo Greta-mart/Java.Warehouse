@@ -10,9 +10,8 @@ public class EditableRepository<T> extends Repository<T> implements IEditableRep
 
     @Override
     public void edit(T entity) {
-        this.session.beginTransaction();
-        Object mergedEntity = this.session.merge(entity);
-        this.session.evict(mergedEntity);
-        this.session.getTransaction().commit();
+        this.sessionAction(s -> {
+            s.merge(entity);
+        });
     }
 }

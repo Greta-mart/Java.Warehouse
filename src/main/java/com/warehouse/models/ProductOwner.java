@@ -15,6 +15,8 @@ public class ProductOwner {
     private List<Contact> contacts;
     private List<Item> items;
 
+    private double totalCost;
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +48,7 @@ public class ProductOwner {
         this.lastName = lastName;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", referencedColumnName = "id", nullable = false)
     public Company getCompany() {
         return company;
@@ -56,7 +58,7 @@ public class ProductOwner {
         this.company = company;
     }
 
-    @OneToMany(mappedBy = "productOwner")
+    @OneToMany(mappedBy = "productOwner", fetch = FetchType.EAGER)
     public List<Contact> getContacts() {
         return this.contacts;
     }
@@ -65,7 +67,7 @@ public class ProductOwner {
         this.contacts = contacts;
     }
 
-    @OneToMany(mappedBy = "productOwner")
+    @OneToMany(mappedBy = "productOwner", fetch = FetchType.EAGER)
     @JsonIgnore
     public List<Item> getItems() {
         return items;
@@ -73,6 +75,26 @@ public class ProductOwner {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    @Transient
+    @JsonIgnore
+    public double getTotalCost(){
+        return this.totalCost;
+    }
+
+    private void setTotalCost(double totalCost){
+        this.totalCost = totalCost;
+    }
+
+    public void calculateTotalCost(){
+        double totalCost = 0;
+
+        for (Item item : this.getItems()) {
+            totalCost += item.calculateCost();
+        }
+
+        this.setTotalCost(totalCost);
     }
 
     @Override

@@ -66,7 +66,7 @@ public class Item {
         this.storingDate = storingDate;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "item_product_category",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "product_category_id"))
@@ -78,7 +78,7 @@ public class Item {
         this.categories = categories;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_owner_id", referencedColumnName = "id", nullable = false)
     public ProductOwner getProductOwner() {
         return productOwner;
@@ -86,6 +86,10 @@ public class Item {
 
     public void setProductOwner(ProductOwner productOwner) {
         this.productOwner = productOwner;
+    }
+
+    public double calculateCost(){
+        return this.getPrice() * this.getCount();
     }
 
     @Override

@@ -33,7 +33,7 @@ public class ProductCategory {
         this.name = name;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "item_product_category",
             joinColumns = @JoinColumn(name = "product_category_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
