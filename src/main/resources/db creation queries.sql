@@ -47,3 +47,13 @@ PRIMARY KEY (item_id, product_category_id),
 FOREIGN KEY (item_id) REFERENCES warehouse.item(id) ON DELETE CASCADE,
 FOREIGN KEY (product_category_id) REFERENCES warehouse.product_category(id) ON DELETE CASCADE
 );
+
+CREATE TABLE transaction_history(
+id INT NOT NULL AUTO_INCREMENT,
+item_id INT NOT NULL,
+type VARCHAR(20) NOT NULL,
+date_time DATETIME NOT NULL,
+count INT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (item_id) REFERENCES warehouse.item(id)
+);

@@ -16,6 +16,7 @@
     <mapping class="com.warehouse.models.Item"/>
     <mapping class="com.warehouse.models.ProductCategory"/>
     <mapping class="com.warehouse.models.ProductOwner"/>
+    <mapping class="com.warehouse.models.Transaction"/>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
