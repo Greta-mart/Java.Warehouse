@@ -99,10 +99,10 @@ public class Transaction {
     }
 
     public static Transaction createDeposit(Timestamp dateTime, Item item, int count){
-        return new Transaction(TransactionType.deposit, dateTime, item, count);
+        return new Transaction(TransactionType.DEPOSIT, dateTime, item, count);
     }
 
     public static Transaction createWithdraw(Timestamp dateTime, Item item, int count){
-        return new Transaction(TransactionType.withdraw, dateTime, item, count);
+        return new Transaction(TransactionType.WITHDRAW, dateTime, item, count);
     }
 }

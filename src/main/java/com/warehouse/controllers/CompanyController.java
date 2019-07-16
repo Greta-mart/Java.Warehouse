@@ -21,18 +21,18 @@ public class CompanyController extends Controller {
     @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Object index() {
         List<Company> companies = this.repository.getAll();
-        return OperationResult.CreateSuccess(companies);
+        return OperationResult.createSuccess(companies);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object addCompany(@RequestBody Company company) {
         this.repository.add(company);
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object deleteCompany(@RequestBody Company company) {
         this.repository.remove(company);
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 }

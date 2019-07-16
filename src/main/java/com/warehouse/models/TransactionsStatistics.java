@@ -35,7 +35,7 @@ public class TransactionsStatistics {
             double cost = transaction.CalculateCost();
             int count = transaction.getCount();
 
-            if (transaction.getType() == TransactionType.deposit){
+            if (transaction.getType() == TransactionType.DEPOSIT){
                 this.totalDepositsCost += cost;
                 this.totalDepositsCount += count;
             }

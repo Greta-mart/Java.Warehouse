@@ -36,7 +36,7 @@ public class ItemController extends Controller {
     @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Object index() {
         List<Item> items = this.itemRepository.getAll();
-        return OperationResult.CreateSuccess(items);
+        return OperationResult.createSuccess(items);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,7 +56,7 @@ public class ItemController extends Controller {
 
         this.transactionRepository.add(Transaction.createDeposit(item.getStoringDate(), item, item.getCount()));
 
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(path = "/deposit", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +73,7 @@ public class ItemController extends Controller {
 
         this.transactionRepository.add(Transaction.createDeposit(this.getCurrentDateTime(), existsItem, item.getCount()));
 
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(path = "/withdraw", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -93,7 +93,7 @@ public class ItemController extends Controller {
 
         this.transactionRepository.add(Transaction.createWithdraw(this.getCurrentDateTime(), existsItem, item.getCount()));
 
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(path = "/statistic/daily", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -104,7 +104,7 @@ public class ItemController extends Controller {
 
         TransactionsStatistics statistics = new TransactionsStatistics(transactions);
 
-        return OperationResult.CreateSuccess(statistics);
+        return OperationResult.createSuccess(statistics);
     }
 
     @RequestMapping(path = "/statistic/monthly", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -115,6 +115,6 @@ public class ItemController extends Controller {
 
         TransactionsStatistics statistics = new TransactionsStatistics(transactions);
 
-        return OperationResult.CreateSuccess(statistics);
+        return OperationResult.createSuccess(statistics);
     }
 }

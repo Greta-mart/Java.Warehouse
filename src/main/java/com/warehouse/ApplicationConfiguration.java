@@ -9,11 +9,9 @@ import com.warehouse.models.*;
 import com.warehouse.utils.HibernateUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("com.warehouse")
 public class ApplicationConfiguration {
     @Bean
     public IRepository<Company> createCompanyRepository(){

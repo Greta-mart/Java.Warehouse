@@ -22,18 +22,18 @@ public class ProductCategoryController extends Controller {
     @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Object index() {
         List<ProductCategory> categories = this.repository.getAll();
-        return OperationResult.CreateSuccess(categories);
+        return OperationResult.createSuccess(categories);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object addProductCategory(@RequestBody ProductCategory productCategory) {
         this.repository.add(productCategory);
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object deleteProductCategory(@RequestBody ProductCategory productCategory) {
         this.repository.remove(productCategory);
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 }

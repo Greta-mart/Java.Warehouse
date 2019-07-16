@@ -27,7 +27,7 @@ public class ProductOwnerController extends Controller {
     @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Object index() {
         List<ProductOwner> productOwners = this.productOwnerRepository.getAll();
-        return OperationResult.CreateSuccess(productOwners);
+        return OperationResult.createSuccess(productOwners);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +43,7 @@ public class ProductOwnerController extends Controller {
             }
         }
 
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +59,7 @@ public class ProductOwnerController extends Controller {
             }
         }
 
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +75,7 @@ public class ProductOwnerController extends Controller {
 
         this.productOwnerRepository.remove(productOwner);
 
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 
     @RequestMapping(path ="/top5", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,6 +88,6 @@ public class ProductOwnerController extends Controller {
                 .limit(5)
                 .collect(Collectors.toList());
 
-        return OperationResult.CreateSuccess(result);
+        return OperationResult.createSuccess(result);
     }
 }

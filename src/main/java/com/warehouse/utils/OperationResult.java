@@ -26,11 +26,15 @@ public class OperationResult {
         this.data = data;
     }
 
-    public static OperationResult CreateSuccess(Object data) {
+    public static OperationResult createSuccess() {
+        return createSuccess(null);
+    }
+
+    public static OperationResult createSuccess(Object data) {
         return new OperationResult(true, null, data);
     }
 
-    public static OperationResult CreateError(String errorText) {
+    public static OperationResult createError(String errorText) {
         return new OperationResult(false, errorText, null);
     }
 }

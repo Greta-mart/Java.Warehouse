@@ -20,6 +20,6 @@ public class ContactController extends Controller {
     @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object deleteContact(@RequestBody Contact contact) {
         this.repository.remove(contact);
-        return OperationResult.CreateSuccess(null);
+        return OperationResult.createSuccess();
     }
 }

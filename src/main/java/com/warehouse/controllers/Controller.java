@@ -12,6 +12,6 @@ public abstract class Controller {
         if (message == null || message.isEmpty())
             message = ex.getClass().getName();
 
-        return OperationResult.CreateError(message);
+        return OperationResult.createError(message);
     }
 }
